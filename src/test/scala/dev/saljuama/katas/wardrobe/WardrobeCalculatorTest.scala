@@ -24,6 +24,7 @@ class WardrobeCalculatorTest extends AnyWordSpec with Matchers {
       }
 
       val emptyCombination = Map(50 → 0, 75 → 0, 100 → 0, 120 → 0)
+
       def assertSizeProducesAtLeastTheCombination(size: Int)(selectedSizes: Map[Int, Int]): Unit = {
         s"return at least the combination $selectedSizes for the size $size" in new Fixture {
           wardrobeCalculator.calculateFittingCombinations(size).map { _.selectedSizes } must contain(selectedSizes)
@@ -58,12 +59,34 @@ class WardrobeCalculatorTest extends AnyWordSpec with Matchers {
 
     }
 
-    "calculate the cost of the combination" when {
+    "calculate the price of the combination" when {
 
-      "there is one single combination" in new Fixture {
-        wardrobeCalculator.calculateFittingCombinations(50)
-          .map{ combination ⇒ combination.price }
-          .foreach { _ mustBe 59}
+      def assertSizeProducesAtLeastTheCombinationThatHasPrice(size: Int)(price: Int): Unit = {
+        s"return a combination for size $size that costs $price USD" in new Fixture {
+          wardrobeCalculator.calculateFittingCombinations(size).map { _.price } must contain(price)
+        }
+      }
+
+      "combinations have only one single piece" must {
+        assertSizeProducesAtLeastTheCombinationThatHasPrice(50)(59)
+        assertSizeProducesAtLeastTheCombinationThatHasPrice(75)(62)
+        assertSizeProducesAtLeastTheCombinationThatHasPrice(100)(90)
+        assertSizeProducesAtLeastTheCombinationThatHasPrice(120)(111)
+      }
+
+      "combinations have multiple pieces of the same size" must {
+        assertSizeProducesAtLeastTheCombinationThatHasPrice(2 * 50)(2 * 59)
+        assertSizeProducesAtLeastTheCombinationThatHasPrice(2 * 75)(2 * 62)
+        assertSizeProducesAtLeastTheCombinationThatHasPrice(2 * 100)(2 * 90)
+        assertSizeProducesAtLeastTheCombinationThatHasPrice(2 * 120)(2 * 111)
+      }
+
+      "combinations have multiple pieces of different sizes" must {
+        assertSizeProducesAtLeastTheCombinationThatHasPrice(50 + 75 + 100 + 120)(59 + 62 + 90 + 111)
+      }
+
+      "combinations have multiple pieces of multiple sizes" must {
+        assertSizeProducesAtLeastTheCombinationThatHasPrice(50 + 2 * 75 + 100 + 4 * 120)(59 + 2 * 62 + 90 + 4 * 111)
       }
 
     }

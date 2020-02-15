@@ -10,10 +10,11 @@ class WardrobeCalculator(private val availableSizesAndPrices: Map[Int, Int]) {
 
   private def calculateFittingCombinations(combination: CombinationTreeNode): Set[Combination] = {
     def fitsInTheWall(remainingWallSize: Int, candidateElementSize: Int) = remainingWallSize - candidateElementSize >= 0
+    def calculatePriceForCombination(selectedSizes: Map[Int, Int]) =
+      selectedSizes.map { case (size, quantity) ⇒ quantity * availableSizesAndPrices.getOrElse(size, 0) }.sum
 
     if (combination.remainingWallSize == 0) {
-      val price = 59
-      Set(Combination(combination.selectedSizes, price))
+      Set(Combination(combination.selectedSizes, calculatePriceForCombination(combination.selectedSizes)))
     }
     else {
       availableSizes
