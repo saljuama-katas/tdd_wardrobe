@@ -3,13 +3,13 @@ package dev.saljuama.katas.wardrobe
 object App {
   def main(args: Array[String]): Unit = {
     val wallSize = 250
-    val availableSizes = Set(50, 75, 100, 120)
+    val availableSizesAndPrices = Map(50 → 59, 75 → 62, 100 → 90, 120 → 111)
 
-    val wardrobeCalculator = new WardrobeCalculator(availableSizes)
+    val wardrobeCalculator = new WardrobeCalculator(availableSizesAndPrices)
     val result = wardrobeCalculator.calculateFittingCombinations(wallSize)
 
     val printer = new WardrobeCombinationsFormatter(10)
-    printer.printHeader(availableSizes)
+    printer.printHeader(availableSizesAndPrices.keys.toList)
     result.foreach { printer.printRow }
   }
 }
@@ -26,8 +26,8 @@ class WardrobeCombinationsFormatter(val cellWidth: Int = 7) {
   }
 
 
-  def printHeader(headerColumns: Set[Int]): Unit = {
-    val headers = headerColumns.toList
+  def printHeader(headerColumns: List[Int]): Unit = {
+    val headers = headerColumns
       .sorted
       .map { _.toString }
       .appended("Size")

@@ -7,8 +7,8 @@ import org.scalatest.wordspec.AnyWordSpec
 class WardrobeCalculatorTest extends AnyWordSpec with Matchers {
 
   trait Fixture {
-    val availableSizes = Set(50, 75, 100, 120)
-    val wardrobeCalculator = new WardrobeCalculator(availableSizes)
+    val availableSizesAndPrices = Map(50 → 59, 75 → 62, 100 → 90, 120 → 111)
+    val wardrobeCalculator = new WardrobeCalculator(availableSizesAndPrices)
   }
 
   "Wardrobe calculator" can {

@@ -1,6 +1,7 @@
 package dev.saljuama.katas.wardrobe
 
-class WardrobeCalculator(val availableSizes: Set[Int]) {
+class WardrobeCalculator(val availableSizesAndPrices: Map[Int, Int]) {
+  private val availableSizes = availableSizesAndPrices.keys.toSet
   private val initialSelectedSizes = availableSizes.map { _ → 0 }.toMap
   private case class CombinationTreeNode(remainingWallSize: Int, selectedSizes: Map[Int, Int] = initialSelectedSizes)
 
