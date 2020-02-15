@@ -24,9 +24,9 @@ class WardrobeCalculatorTest extends AnyWordSpec with Matchers {
       }
 
       val emptyCombination = Map(50 → 0, 75 → 0, 100 → 0, 120 → 0)
-      def assertSizeProducesAtLeastTheCombination(size: Int)(combination: Map[Int, Int]): Unit = {
-        s"return at least the combination $combination for the size $size" in new Fixture {
-          wardrobeCalculator.calculateFittingCombinations(size) must contain(combination)
+      def assertSizeProducesAtLeastTheCombination(size: Int)(selectedSizes: Map[Int, Int]): Unit = {
+        s"return at least the combination $selectedSizes for the size $size" in new Fixture {
+          wardrobeCalculator.calculateFittingCombinations(size) must contain(Combination(selectedSizes))
         }
       }
 

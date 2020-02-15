@@ -37,9 +37,9 @@ class WardrobeCombinationsFormatter(val cellWidth: Int = 7) {
     printSeparationLine(headerColumns.size + 1)
   }
 
-  def printRow(result: Map[Int, Int]): Unit = {
-    val combinationTotalSize = result.map { entry ⇒ entry._1 * entry._2 }.sum
-    val values = result.toList
+  def printRow(result: Combination): Unit = {
+    val combinationTotalSize = result.selectedSizes.map { entry ⇒ entry._1 * entry._2 }.sum
+    val values = result.selectedSizes.toList
       .sortBy { _._1 }
       .map { _._2 }
       .appended { combinationTotalSize }
