@@ -12,7 +12,7 @@ class WardrobeCalculator(private val availableSizesAndPrices: Map[Int, Int]) {
     def fitsInTheWall(remainingWallSize: Int, candidateElementSize: Int) = remainingWallSize - candidateElementSize >= 0
 
     if (combination.remainingWallSize == 0) {
-      val price = 0
+      val price = 59
       Set(Combination(combination.selectedSizes, price))
     }
     else {
