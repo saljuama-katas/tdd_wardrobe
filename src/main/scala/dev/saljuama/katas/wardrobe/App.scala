@@ -30,11 +30,12 @@ class WardrobeCombinationsFormatter(val cellWidth: Int = 7) {
     val headers = headerColumns
       .sorted
       .map { _.toString }
+      .appended("Price")
       .appended("Size")
 
-    printSeparationLine(headerColumns.size + 1)
+    printSeparationLine(headerColumns.size + 2)
     println(formatRow(headers))
-    printSeparationLine(headerColumns.size + 1)
+    printSeparationLine(headerColumns.size + 2)
   }
 
   def printRow(result: Combination): Unit = {
@@ -42,6 +43,7 @@ class WardrobeCombinationsFormatter(val cellWidth: Int = 7) {
     val values = result.selectedSizes.toList
       .sortBy { _._1 }
       .map { _._2 }
+      .appended { result.price }
       .appended { combinationTotalSize }
 
     println(formatRow(values))
