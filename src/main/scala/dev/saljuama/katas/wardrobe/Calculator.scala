@@ -1,8 +1,9 @@
 package dev.saljuama.katas.wardrobe
 
-class WardrobeCalculator(val availableSizesAndPrices: Map[Int, Int]) {
+class WardrobeCalculator(private val availableSizesAndPrices: Map[Int, Int]) {
   private val availableSizes = availableSizesAndPrices.keys.toSet
   private val initialSelectedSizes = availableSizes.map { _ → 0 }.toMap
+
   private case class CombinationTreeNode(remainingWallSize: Int, selectedSizes: Map[Int, Int] = initialSelectedSizes)
 
   def calculateFittingCombinations(size: Int): Set[Combination] = calculateFittingCombinations(CombinationTreeNode(size))
@@ -10,9 +11,11 @@ class WardrobeCalculator(val availableSizesAndPrices: Map[Int, Int]) {
   private def calculateFittingCombinations(combination: CombinationTreeNode): Set[Combination] = {
     def fitsInTheWall(remainingWallSize: Int, candidateElementSize: Int) = remainingWallSize - candidateElementSize >= 0
 
-    if (combination.remainingWallSize == 0)
-      Set(Combination(combination.selectedSizes))
-    else
+    if (combination.remainingWallSize == 0) {
+      val price = 0
+      Set(Combination(combination.selectedSizes, price))
+    }
+    else {
       availableSizes
         .filter { size ⇒ fitsInTheWall(combination.remainingWallSize, size) }
         .flatMap { size ⇒
@@ -20,7 +23,8 @@ class WardrobeCalculator(val availableSizesAndPrices: Map[Int, Int]) {
           val updatedSelectedSizes = combination.selectedSizes + (size → (combination.selectedSizes(size) + 1))
           calculateFittingCombinations(CombinationTreeNode(updatedRemainingWallSize, updatedSelectedSizes))
         }
+    }
   }
 }
 
-case class Combination(selectedSizes: Map[Int, Int])
+case class Combination(selectedSizes: Map[Int, Int], price: Int)
