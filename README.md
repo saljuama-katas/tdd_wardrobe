@@ -15,9 +15,11 @@ Write a function that returns all combinations of wardrobe elements that exactly
 
 Here is the price list for the available wardrobe elements:
 
-50cm => 59 USD
-75cm => 62 USD
-100cm => 90 USD
-120cm => 111 USD
+| size  | price |
+|-------|-------|
+| 50cm  | $59   |
+| 75cm  | $62   |
+| 100cm | $90   |
+| 120cm | $111  |
 
 Write a second function that checks which of the resulting combinations is the cheapest one. 
